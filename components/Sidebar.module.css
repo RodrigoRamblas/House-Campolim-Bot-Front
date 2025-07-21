@@ -1,0 +1,61 @@
+ .sidebar {
+  width: 200px;
+  height: 100vh;
+  background-color: #fdf1c7; /* bege claro */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  border-right: 1px solid #ddd;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
+
+ .item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  color: #80333e; /* vinho/marsala */
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.3s;
+  width: 100%;
+  font-weight: 500;
+}
+
+ .item:hover {
+  background-color: #d9bba5; /* hover mais escuro */
+}
+
+.logout {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #8b0000;
+  cursor: pointer;
+  margin: 20px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.logout:hover {
+  background-color: #b22222;
+}
+
+.footer {
+  margin-bottom: 20px;
+}
