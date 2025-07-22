@@ -1,0 +1,137 @@
+.container {
+  min-height: 100vh;
+  background-color: #cce5b6;
+  padding: 16rem 1rem 4rem 1rem;
+}
+
+.pageTitle {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 3rem;
+  position: relative;
+  
+  &::after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 4px;
+    background: #3498db;
+    margin: 1rem auto;
+    border-radius: 2px;
+  }
+}
+
+.newsGrid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+  padding: 0 10px;
+}
+
+.newsCard {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '🟦';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    font-size: 2rem;
+    opacity: 0.3;
+  }
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.cardHeader {
+  margin-bottom: 1rem;
+}
+
+.cardTitle {
+  font-size: 1.3rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.cardSummary {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.6;
+  flex: 1;
+  margin-bottom: 1.5rem;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 0.9rem;
+  color: #888;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.cardDate {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.cardAuthor {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding-top: 14rem;
+  }
+  
+  .pageTitle {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .newsGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .newsCard {
+    padding: 1.5rem;
+  }
+  
+  .cardTitle {
+    font-size: 1.2rem;
+  }
+  
+  .cardSummary {
+    font-size: 0.95rem;
+  }
+  
+  .cardFooter {
+    font-size: 0.85rem;
+  }
+}
