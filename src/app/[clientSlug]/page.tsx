@@ -1,7 +1,8 @@
 'use client'
 
 import { useParams } from 'next/navigation'
-import { clients } from '../data/clients'
+import Link from 'next/link'
+import { clients } from '../data/clients' 
 import styles from './ClientLogin.module.scss'
 import Image from 'next/image'
 
@@ -15,7 +16,9 @@ export default function ClientLogin() {
         <div className={styles.errorBox}>
           <h1>Cliente não encontrado</h1>
           <p>O cliente que você está procurando não existe.</p>
-          <a href="/clients">Voltar para clientes</a>
+          <Link href="/clients">
+            Voltar para clientes
+          </Link>
         </div>
       </div>
     )
@@ -53,8 +56,12 @@ export default function ClientLogin() {
           </button>
           
           <div className={styles.links}>
-            <a href="#">Esqueceu sua senha?</a>
-            <a href="/clients">Voltar</a>
+            <Link href="#">
+              Esqueceu sua senha?
+            </Link>
+            <Link href="/clients">
+              Voltar
+            </Link>
           </div>
         </form>
       </div>
