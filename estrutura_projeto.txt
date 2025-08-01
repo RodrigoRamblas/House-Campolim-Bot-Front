@@ -1,3 +1,15 @@
+.DS_Store
+.gitignore
+LICENSE
+README copy.md
+README.md
+ecosystem.config.js
+eslint.config.mjs
+gerarEstruturaProjeto.js
+next-env.d.ts
+next.config.ts
+package-lock.json
+package.json
 public/
   file.svg
   globe.svg
@@ -23,7 +35,7 @@ src/
   app/
     .DS_Store
     [clientSlug]/
-      ClientLogin.module.scss.txt
+      ClientLogin.module.scss
       page.tsx
     about/
       About.module.scss
