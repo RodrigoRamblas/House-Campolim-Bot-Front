@@ -18,7 +18,7 @@ export async function login(credentials: LoginCredentials): Promise<LoginRespons
   formData.append('client_id', 'string')
   formData.append('client_secret', '********')
 
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL_DEVELOPMENT || process.env.NEXT_PUBLIC_API_URL_PRODUCTION}/auth/login`, {
+  const response = await fetch('/api/auth/login', {
     method: 'POST',
     headers: {
       'accept': 'application/json',
