@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter, useParams } from 'next/navigation'
-import { useState, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import styles from './HomeScreen.module.scss'
 import Image from 'next/image'
 
@@ -20,62 +20,33 @@ interface HomeScreenProps {
 export default function HomeScreen({ client }: HomeScreenProps) {
   const router = useRouter()
   const { clientSlug } = useParams()
-  const fileInputRef = useRef<HTMLInputElement>(null)
-  const [uploading, setUploading] = useState(false)
-  const [uploadError, setUploadError] = useState('')
-  const [uploadSuccess, setUploadSuccess] = useState(false)
+  const [proxyEnabled, setProxyEnabled] = useState(false)
+
+  // Load proxy state from cookie on component mount
+  useEffect(() => {
+    const savedProxyState = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('proxyEnabled='))
+      ?.split('=')[1]
+    
+    if (savedProxyState !== undefined) {
+      setProxyEnabled(savedProxyState === 'true')
+    }
+  }, [])
+
+  // Save proxy state to cookie whenever it changes
+  const handleProxyToggle = (enabled: boolean) => {
+    setProxyEnabled(enabled)
+    // Set cookie to expire in 365 days
+    const expirationDate = new Date()
+    expirationDate.setFullYear(expirationDate.getFullYear() + 1)
+    document.cookie = `proxyEnabled=${enabled}; expires=${expirationDate.toUTCString()}; path=/`
+  }
   
   const handleLogout = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('tokenType')
     router.push(`/${clientSlug}`)
-  }
-  
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (!file) return
-    
-    // Validate file type
-    const validTypes = ['application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
-    if (!validTypes.includes(file.type)) {
-      setUploadError('Por favor, selecione um arquivo Excel (.xls ou .xlsx)')
-      return
-    }
-    
-    setUploading(true)
-    setUploadError('')
-    setUploadSuccess(false)
-    
-    const formData = new FormData()
-    formData.append('file', file)
-    
-    const token = localStorage.getItem('token')
-    
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL_DEVELOPMENT || process.env.NEXT_PUBLIC_API_URL_PRODUCTION}/automation/process-excel`, {
-        method: 'POST',
-        headers: {
-          'accept': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: formData
-      })
-      
-      if (!response.ok) {
-        const error = await response.json()
-        throw new Error(error.detail || 'Erro ao processar arquivo')
-      }
-      
-      setUploadSuccess(true)
-      // Clear file input
-      if (fileInputRef.current) {
-        fileInputRef.current.value = ''
-      }
-    } catch (err) {
-      setUploadError(err instanceof Error ? err.message : 'Erro ao fazer upload do arquivo')
-    } finally {
-      setUploading(false)
-    }
   }
   
   return (
@@ -109,23 +80,12 @@ export default function HomeScreen({ client }: HomeScreenProps) {
         <div className={styles.optionsGrid}>
           <div className={styles.optionCard}>
             <div className={styles.iconWrapper}>
-              <span className={styles.icon}>💬</span>
+              <span className={styles.icon}>🎧</span>
             </div>
-            <h3>Chat</h3>
-            <p>Inicie uma conversa com nosso assistente</p>
+            <h3>Support</h3>
+            <p>Obtenha ajuda e suporte técnico</p>
             <button className={styles.optionButton}>
-              Abrir Chat
-            </button>
-          </div>
-          
-          <div className={styles.optionCard}>
-            <div className={styles.iconWrapper}>
-              <span className={styles.icon}>📊</span>
-            </div>
-            <h3>Relatórios</h3>
-            <p>Visualize relatórios e análises</p>
-            <button className={styles.optionButton}>
-              Ver Relatórios
+              Acessar Support
             </button>
           </div>
           
@@ -133,57 +93,46 @@ export default function HomeScreen({ client }: HomeScreenProps) {
             <div className={styles.iconWrapper}>
               <span className={styles.icon}>⚙️</span>
             </div>
-            <h3>Configurações</h3>
-            <p>Gerencie suas preferências</p>
+            <h3>Settings</h3>
+            <p>Gerencie suas preferências e configurações</p>
             <button className={styles.optionButton}>
-              Configurar
+              Abrir Settings
             </button>
           </div>
           
           <div className={styles.optionCard}>
             <div className={styles.iconWrapper}>
-              <span className={styles.icon}>📁</span>
+              <span className={styles.icon}>🌐</span>
             </div>
-            <h3>Documentos</h3>
-            <p>Acesse documentos importantes</p>
-            <button className={styles.optionButton}>
-              Ver Documentos
-            </button>
-          </div>
-          
-          <div className={styles.optionCard}>
-            <div className={styles.iconWrapper}>
-              <span className={styles.icon}>📤</span>
+            <h3>Proxy Reverso</h3>
+            <p>Ative o proxy reverso</p>
+            <div className={styles.proxyToggle}>
+              <label className={styles.toggleSwitch}>
+                <input
+                  type="checkbox"
+                  checked={proxyEnabled}
+                  onChange={(e) => handleProxyToggle(e.target.checked)}
+                />
+                <span className={styles.slider}></span>
+              </label>
+              <span className={styles.toggleLabel}>
+                {proxyEnabled ? 'ON' : 'OFF'}
+              </span>
             </div>
-            <h3>Upload de Planilha</h3>
-            <p>Faça upload de arquivo Excel para processamento</p>
-            
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept=".xls,.xlsx"
-              onChange={handleFileUpload}
-              className={styles.fileInput}
-              id="excel-upload"
-            />
-            
-            <label htmlFor="excel-upload" className={styles.uploadButton}>
-              {uploading ? 'Enviando...' : 'Selecionar Arquivo'}
-            </label>
-            
-            {uploadError && (
-              <div className={styles.uploadError}>
-                {uploadError}
-              </div>
-            )}
-            
-            {uploadSuccess && (
-              <div className={styles.uploadSuccess}>
-                Arquivo processado com sucesso!
-              </div>
-            )}
           </div>
         </div>
+        
+        {clientSlug === 'house-campolim' && (
+          <div className={styles.proxyImageContainer}>
+            <Image
+              src={proxyEnabled ? '/image/clients/housecampolim/proxy-on.png' : '/image/clients/housecampolim/proxy-off.png'}
+              alt={proxyEnabled ? 'Proxy Ativo' : 'Proxy Inativo'}
+              width={900}
+              height={600}
+              className={styles.proxyImage}
+            />
+          </div>
+        )}
       </main>
     </div>
   )
