@@ -14,8 +14,8 @@ export default function ClientLogin() {
   const client = clients.find(c => c.slug === clientSlug)
   
   const [formData, setFormData] = useState({
-    email: clientSlug === 'house-campolim' ? 'elizaishioka@housecampolim.com.br' : '',
-    password: clientSlug === 'house-campolim' ? 'Sucesso26$$' : ''
+    email: '',
+    password: ''
   })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -40,16 +40,6 @@ export default function ClientLogin() {
     setLoading(true)
 
     try {
-      // Demo mode for House Campolim - bypass backend
-      if (clientSlug === 'house-campolim' && 
-          formData.email === 'elizaishioka@housecampolim.com.br' && 
-          formData.password === 'Sucesso26$$') {
-        localStorage.setItem('token', 'demo-token')
-        localStorage.setItem('tokenType', 'Bearer')
-        router.push(`/${clientSlug}/dashboard`)
-        return
-      }
-
       const response = await login({
         username: formData.email,
         password: formData.password,

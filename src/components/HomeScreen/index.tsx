@@ -2,6 +2,7 @@
 
 import { useRouter, useParams } from 'next/navigation'
 import { useState, useEffect } from 'react'
+import { enableProxy, disableProxy } from '@/services/proxy'
 import styles from './HomeScreen.module.scss'
 import Image from 'next/image'
 
@@ -21,6 +22,8 @@ export default function HomeScreen({ client }: HomeScreenProps) {
   const router = useRouter()
   const { clientSlug } = useParams()
   const [proxyEnabled, setProxyEnabled] = useState(false)
+  const [proxyLoading, setProxyLoading] = useState(false)
+  const [proxyError, setProxyError] = useState('')
 
   // Load proxy state from cookie on component mount
   useEffect(() => {
@@ -34,13 +37,46 @@ export default function HomeScreen({ client }: HomeScreenProps) {
     }
   }, [])
 
-  // Save proxy state to cookie whenever it changes
-  const handleProxyToggle = (enabled: boolean) => {
-    setProxyEnabled(enabled)
-    // Set cookie to expire in 365 days
+  // Persist proxy state in a cookie so the preference survives reloads.
+  const persistProxyState = (enabled: boolean) => {
     const expirationDate = new Date()
     expirationDate.setFullYear(expirationDate.getFullYear() + 1)
     document.cookie = `proxyEnabled=${enabled}; expires=${expirationDate.toUTCString()}; path=/`
+  }
+
+  const handleProxyToggle = async (enabled: boolean) => {
+    if (proxyLoading) {
+      return
+    }
+
+    setProxyError('')
+    const previousState = proxyEnabled
+    setProxyEnabled(enabled)
+    setProxyLoading(true)
+
+    const slug = typeof clientSlug === 'string'
+      ? clientSlug
+      : Array.isArray(clientSlug)
+        ? clientSlug[0]
+        : undefined
+
+    try {
+      const options = slug ? { clientSlug: slug } : undefined
+
+      if (enabled) {
+        await enableProxy(options)
+      } else {
+        await disableProxy(options)
+      }
+
+      persistProxyState(enabled)
+    } catch (error) {
+      setProxyEnabled(previousState)
+      persistProxyState(previousState)
+      setProxyError(error instanceof Error ? error.message : 'Não foi possível atualizar o proxy.')
+    } finally {
+      setProxyLoading(false)
+    }
   }
   
   const handleLogout = () => {
@@ -111,14 +147,19 @@ export default function HomeScreen({ client }: HomeScreenProps) {
                 <input
                   type="checkbox"
                   checked={proxyEnabled}
-                  onChange={(e) => handleProxyToggle(e.target.checked)}
+                  onChange={(e) => { void handleProxyToggle(e.target.checked) }}
+                  disabled={proxyLoading}
+                  aria-label="Alternar proxy reverso"
                 />
                 <span className={styles.slider}></span>
               </label>
               <span className={styles.toggleLabel}>
-                {proxyEnabled ? 'ON' : 'OFF'}
+                {proxyLoading ? '...' : proxyEnabled ? 'ON' : 'OFF'}
               </span>
             </div>
+            {proxyError && (
+              <p className={styles.proxyStatusError}>{proxyError}</p>
+            )}
           </div>
         </div>
         

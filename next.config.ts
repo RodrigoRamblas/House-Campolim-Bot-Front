@@ -14,12 +14,31 @@ const nextConfig: NextConfig = {
     ]
   },
   async rewrites() {
+    // Resolve API URL from env with a safe local fallback.
+    const apiUrl =
+      process.env.NEXT_PUBLIC_API_URL_DEVELOPMENT ||
+      process.env.NEXT_PUBLIC_API_URL_PRODUCTION ||
+      'http://localhost:8000';
+
+    // Ensure apiUrl is absolute (Next requires rewrites destinations to start with '/', 'http://' or 'https://').
+    const safeApiUrl =
+      apiUrl.startsWith('/') || apiUrl.startsWith('http://') || apiUrl.startsWith('https://')
+        ? apiUrl
+        : `https://${apiUrl}`;
+
+    // Always point rewrites to the /api prefix on the upstream host.
+    const normalizedApiHost = safeApiUrl.replace(/[/]+$/, '');
+    const apiBase = normalizedApiHost.endsWith('/api')
+      ? normalizedApiHost
+      : `${normalizedApiHost}/api`;
+
     return [
       {
+        // generic /api/* proxy to the configured API host
         source: '/api/:path*',
-        destination: `${process.env.NEXT_PUBLIC_API_URL_DEVELOPMENT || process.env.NEXT_PUBLIC_API_URL_PRODUCTION}/:path*`,
+        destination: `${apiBase}/:path*`,
       },
-    ]
+    ];
   },
 };
 
