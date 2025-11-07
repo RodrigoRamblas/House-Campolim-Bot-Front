@@ -3,7 +3,7 @@ module.exports = {
     name: 'growthrats',
     script: 'npm',
     args: 'start',
-    cwd: '/home/usuario/apps/growthrats',
+    cwd: '/root/House-Campolim-Bot-Front',
     instances: 1,
     autorestart: true,
     watch: false,
@@ -12,9 +12,9 @@ module.exports = {
       NODE_ENV: 'production',
       PORT: 3000
     },
-    error_file: '/home/usuario/apps/growthrats/logs/err.log',
-    out_file: '/home/usuario/apps/growthrats/logs/out.log',
-    log_file: '/home/usuario/apps/growthrats/logs/combined.log',
+    error_file: '/root/House-Campolim-Bot-Front/logs/err.log',
+    out_file: '/root/House-Campolim-Bot-Front/logs/out.log',
+    log_file: '/root/House-Campolim-Bot-Front/logs/combined.log',
     time: true
   }]
 }
