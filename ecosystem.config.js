@@ -1,10 +1,11 @@
 module.exports = {
   apps: [{
     name: 'growthrats',
-    script: 'npm',
+    script: 'node_modules/next/dist/bin/next',
     args: 'start',
     cwd: '/root/House-Campolim-Bot-Front',
     instances: 1,
+    exec_mode: 'fork',
     autorestart: true,
     watch: false,
     max_memory_restart: '1G',
