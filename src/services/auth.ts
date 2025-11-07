@@ -15,10 +15,8 @@ export async function login(credentials: LoginCredentials): Promise<LoginRespons
   formData.append('username', credentials.username)
   formData.append('password', credentials.password)
   formData.append('scope', '')
-  formData.append('client_id', 'string')
-  formData.append('client_secret', '********')
 
-  const response = await fetch('/api/auth/login', {
+  const response = await fetch('/api/v1/token', {
     method: 'POST',
     headers: {
       'accept': 'application/json',

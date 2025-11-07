@@ -188,6 +188,17 @@
   margin-top: 1rem;
 }
 
+.proxyStatusError {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: #fee;
+  border: 1px solid #fcc;
+  border-radius: 4px;
+  color: #c33;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
 .toggleSwitch {
   position: relative;
   display: inline-block;
