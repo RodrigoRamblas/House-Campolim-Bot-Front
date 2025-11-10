@@ -5,8 +5,10 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Keep background white even in dark mode per request */
+    --background: #ffffff;
+    /* Use dark foreground for contrast on white background */
+    --foreground: #171717;
   }
 }
 
