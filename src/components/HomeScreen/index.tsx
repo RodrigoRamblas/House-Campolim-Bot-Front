@@ -131,7 +131,10 @@ export default function HomeScreen({ client }: HomeScreenProps) {
             </div>
             <h3>Settings</h3>
             <p>Gerencie suas preferências e configurações</p>
-            <button className={styles.optionButton}>
+            <button
+              className={styles.optionButton}
+              onClick={() => router.push(`/${clientSlug}/dashboard/settings`)}
+            >
               Abrir Settings
             </button>
           </div>

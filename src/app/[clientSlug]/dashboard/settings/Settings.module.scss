@@ -1,0 +1,227 @@
+.container {
+  min-height: 100vh;
+  background-color: #f5f7fa;
+  padding: 2rem;
+}
+
+.card {
+  max-width: 960px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.backButton {
+  padding: 0.5rem 1.25rem;
+  border-radius: 6px;
+  border: 1px solid #d5d9e0;
+  background: #f8f9fb;
+  color: #394150;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.backButton:hover {
+  background: #e8ebf2;
+}
+
+.form {
+  display: grid;
+  gap: 1rem;
+}
+
+.fieldRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.field label {
+  font-weight: 600;
+  color: #404a5a;
+}
+
+.field input {
+  padding: 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #d5d9e0;
+  background-color: #ffffff;
+  color: #1a1a1a;
+  font-size: 1rem;
+}
+
+.field select {
+  padding: 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #d5d9e0;
+  font-size: 1rem;
+  background-color: #ffffff;
+  color: #1a1a1a;
+  appearance: none;
+}
+
+.submitButton {
+  justify-self: flex-start;
+  padding: 0.75rem 1.75rem;
+  border-radius: 6px;
+  border: none;
+  background: #007bff;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.submitButton:hover {
+  background: #0062cc;
+}
+
+.submitButton:disabled {
+  background: #9bbcf3;
+  cursor: not-allowed;
+}
+
+.secondaryButton {
+  justify-self: flex-start;
+  padding: 0.5rem 1.5rem;
+  border-radius: 6px;
+  border: 1px solid #d5d9e0;
+  background: #f8f9fb;
+  color: #394150;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.secondaryButton:hover {
+  background: #e8ebf2;
+}
+
+.feedback {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.error {
+  background: #fee;
+  border: 1px solid #fcc;
+  color: #c0392b;
+}
+
+.success {
+  background: #edf9f0;
+  border: 1px solid #c3e6cb;
+  color: #1c7c3a;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table thead {
+  background: #f0f4fa;
+  text-align: left;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e6eaf2;
+  font-size: 0.95rem;
+  color: #1a1a1a;
+}
+
+.rowActions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.linkButton,
+.linkButtonDanger {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #0366d6;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.linkButton:hover,
+.linkButton:focus {
+  text-decoration: underline;
+}
+
+.linkButtonDanger {
+  color: #c0392b;
+}
+
+.linkButtonDanger:hover,
+.linkButtonDanger:focus {
+  text-decoration: underline;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #6b7484;
+}
+
+@media (max-width: 640px) {
+  .card {
+    padding: 1.5rem;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .submitButton {
+    width: 100%;
+  }
+}
