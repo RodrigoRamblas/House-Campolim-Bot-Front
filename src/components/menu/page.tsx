@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import styles from './Menu.module.scss'
 
@@ -6,13 +5,7 @@ export default function Menu() {
   return (
     <div className={styles.header}>
       <div className={styles.logoWrapper}>
-        <Image
-          src="/image/home/logo.svg"
-          alt="House Campolim Logo"
-          width={200}
-          height={200}
-          priority
-        />
+        <span className={styles.logoText}>GROWTHRATE</span>
       </div>
       <nav className={styles.navigation}>
         <Link href="/home" className={styles.navLink}>Home</Link>

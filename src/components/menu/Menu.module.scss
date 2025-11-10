@@ -5,7 +5,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #cce5b6;
+  background-color: #ffffff;
 }
 
 .header {
@@ -41,6 +41,23 @@
       width: 180px;
       height: auto;
     }
+  }
+}
+
+/* Text replacement for the logo (GROWTHRATE) */
+.logoText {
+  display: inline-block;
+  color: #000; /* solid black */
+  font-family: 'Poppins', 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 800;
+  font-size: 2.5rem; /* ~40px */
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 1.8rem;
   }
 }
 
