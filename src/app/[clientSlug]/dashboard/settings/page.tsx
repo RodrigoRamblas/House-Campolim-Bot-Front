@@ -9,6 +9,11 @@ const ACTION_OPTIONS = [
   { value: 'replace', label: 'Substituir (replace)' },
   { value: 'insert_after', label: 'Inserir após (insert_after)' },
   { value: 'insert_before', label: 'Inserir antes (insert_before)' },
+  { value: 'to_h3', label: 'to_h3' },
+  { value: 'to_h2', label: 'to_h2' },
+  { value: 'to_h1', label: 'to_h1' },
+  { value: 'replace_both', label: 'ReplaceBoth' },
+  { value: 'replace_outside', label: 'ReplaceOutside' }
 ]
 
 export default function SettingsPage() {
