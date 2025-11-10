@@ -219,7 +219,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #fffdfd;
+  background-color: #f4f6fb;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
   transition: .4s;
   border-radius: 34px;
 }
